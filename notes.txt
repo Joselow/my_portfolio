@@ -1,0 +1,8 @@
+--
+el nav que el fondo tenga olor cuando baja
+-- los links de las secciones
+-- poner proyectos reales 
+-- mejorara la descripocion del about mi
+-- cambair svg icons por emojis owo
+----->
+--- JS owo
