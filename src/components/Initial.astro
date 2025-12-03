@@ -1,91 +1,145 @@
+---
+const profile = {
+  name: "Joselow",
+  image: "/images/profile_animated.jpg",
+  email: "joshepmanuello@gmail.com",
+  status: "Disponible para trabajar",
+  colorStatus: "bg-green-600",
+  description: "<b>+3 años</b> de experiencia. <b>Desarrollador de Software</b> con <b>especialización en</b> el desarrollo de <b>aplicaciones web</b>.",
+  socialLinks: [
+    {
+      name: "GitHub",
+      url: "https://github.com/Joselow",
+      icon: "M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+    },
+    {
+      name: "LinkedIn",
+      url: "https://www.linkedin.com/in/joshep-manuel-macha-rutti-161127239/",
+      icon: "M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"
+    }
+  ],
+  resume: {
+    text: "Ver CV",
+    url: "https://drive.google.com/file/d/1Eb0ZD-oHYNgV9nWEnhUjyDIxmi7FeDbE/view?usp=sharing"
+  },
+  service: {
+    text: "Servicios",
+    url: "https://drive.google.com/file/d/1Eb0ZD-oHYNgV9nWEnhUjyDIxmi7FeDbE/view?usp=sharing"
+  }
+};
+---
+
 <section class="relative flex flex-col items-center justify-between">
   <div class="grid grid-cols-1 items-center md:grid-cols-2 lg:gap-20 gap-y-8">
-    <div
-      class="flex flex-col items-start justify-center rounded-lg p-3 lg:py-5 lg:px-12 bg-primary-bg h-full"
-    >
+    <div class="flex flex-col items-start justify-center rounded-lg p-3 lg:py-5 lg:px-12 bg-primary-bg h-full">
+      <!-- Profile Image -->
       <div class="flex w-full justify-center">
         <img
-          alt="Joselow"
+          alt={profile.name}
           loading="lazy"
           decoding="async"
           data-nimg="1"
           class="rounded-full border border-gray-300"
           style="color:transparent; width: 120px; height: 120px; border-radius: 50%;"
-          src="/images/profile_animated.jpg"
+          src={profile.image}
         />
       </div>
 
+      <!-- Status Badge -->
       <div class="flex justify-center w-full mt-4">
         <div
           title="Contáctame 😎"
-          class="cursor-pointer inline-flex items-center justify-center px-3 py-1 text-sm  bg-green-500 rounded-full dark:bg-green-500 text-white backdrop-blur-3xl whitespace-nowrap"
+          class={`cursor-pointer inline-flex items-center justify-center px-3 py-1 text-sm 
+          ${profile.colorStatus} rounded-full 
+          dark:${profile.colorStatus} text-white backdrop-blur-3xl whitespace-nowrap`}
         >
-          <a id="contacto" href="mailto:joshepmanuello@gmail.com">
-            Disponible para trabajar
+          <a id="contacto" href={`mailto:${profile.email}`}>
+            {profile.status}
           </a>
         </div>
       </div>
-      <p class="text-gray-300 text-sm lg:text-base my-2 lg:my-4 text-center">
-        +2 años de experiencia. Desarrollador de Software con especialización en
-        el desarrollo de aplicaciones web, destacando en habilidades frontend y
-        backend.
-      </p>
+
+      <!-- Description -->
+      <p class="text-gray-300 text-sm lg:text-base my-2 lg:my-4 text-center" set:html={profile.description}></p>
+
+      <!-- Social Links -->
       <div class="w-full flex justify-center items-center gap-5">
-        <a
-          target="_blank"
-          class="transition-all text-cyan-500 hover:scale-125 duration-300"
-          href="https://github.com/Joselow"
-          ><svg
-            stroke="currentColor"
-            fill="currentColor"
-            stroke-width="0"
-            viewBox="0 0 16 16"
-            height="24"
-            width="24"
-            xmlns="http://www.w3.org/2000/svg"
-            ><path
-              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
-            ></path></svg
-          ></a
-        ><a
-          target="_blank"
-          class="transition-all text-cyan-500 hover:scale-125 duration-300"
-          href="https://www.linkedin.com/in/joshep-manuel-macha-rutti-161127239/"
-          ><svg
-            stroke="currentColor"
-            fill="currentColor"
-            stroke-width="0"
-            viewBox="0 0 16 16"
-            height="24"
-            width="24"
-            xmlns="http://www.w3.org/2000/svg"
-            ><path
-              d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"
-            ></path></svg
-          ></a
-        >
-      </div><div class="w-full justify-center flex items-center gap-3 mt-6">
-        <a
-          target="_blank"
-          class="bg-gradient-to-r to-pink-500 from-violet-600 p-[1px] rounded-full transition-all duration-300 hover:from-pink-500 hover:to-violet-600"
-          href="https://drive.google.com/file/d/1Eb0ZD-oHYNgV9nWEnhUjyDIxmi7FeDbE/view?usp=sharing"
-          ><button
-            class="px-3 text-xs md:px-4 py-2 md:py-2.5 bg-[#0d1224] rounded-full border-none text-center font-medium uppercase tracking-wider text-[#ffff] no-underline transition-all duration-200 ease-out md:font-semibold flex items-center gap-1 hover:gap-3"
-            ><span>Ver CV</span><svg
+        {profile.socialLinks.map((social) => (
+          <a
+            target="_blank"
+            class="transition-all text-cyan-500 hover:scale-125 duration-300 flex gap-1 items-center"
+            href={social.url}
+            rel="noopener noreferrer"
+          >
+            <svg
               stroke="currentColor"
               fill="currentColor"
               stroke-width="0"
-              viewBox="0 0 24 24"
-              height="16"
-              width="16"
+              viewBox="0 0 16 16"
+              height="22"
+              width="22"
               xmlns="http://www.w3.org/2000/svg"
-              ><path fill="none" d="M0 0h24v24H0z"></path><path
-                d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"></path></svg
-            ></button
-          ></a
-        >
+            >
+              <path d={social.icon}></path>
+            </svg>
+            <svg width="17px" height="17px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+              <g id="SVGRepo_iconCarrier">
+                <g id="Interface / External_Link">
+                  <path id="Vector" d="M10.0002 5H8.2002C7.08009 5 6.51962 5 6.0918 5.21799C5.71547 5.40973 5.40973 5.71547 5.21799 6.0918C5 6.51962 5 7.08009 5 8.2002V15.8002C5 16.9203 5 17.4801 5.21799 17.9079C5.40973 18.2842 5.71547 18.5905 6.0918 18.7822C6.5192 19 7.07899 19 8.19691 19H15.8031C16.921 19 17.48 19 17.9074 18.7822C18.2837 18.5905 18.5905 18.2839 18.7822 17.9076C19 17.4802 19 16.921 19 15.8031V14M20 9V4M20 4H15M20 4L13 11" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+              </g>
+            </svg>
+          </a>
+        ))}
       </div>
+
+      <!-- Resume Button -->
+       <section class="flex justify-center gap-2">
+         <div class="w-full justify-center flex items-center gap-3 mt-6">
+           <a
+             target="_blank"
+             class="bg-gradient-to-r to-pink-500 from-violet-600 p-[1px] rounded-full transition-all duration-300 hover:from-pink-500 hover:to-violet-600"
+             href={profile.resume.url}
+             rel="noopener noreferrer"
+           >
+             <button
+               class="px-3 text-lg md:px-6 py-2 md:py-2.5 bg-[#0d1224] rounded-full border-none text-center font-medium uppercase tracking-wider text-[#ffff] no-underline transition-all duration-200 ease-out md:font-semibold flex items-center gap-1 hover:gap-3"
+             >
+               <span>{profile.resume.text}</span>
+               <svg
+                 stroke="currentColor"
+                 fill="currentColor"
+                 stroke-width="0"
+                 viewBox="0 0 24 24"
+                 height="16"
+                 width="16"
+                 xmlns="http://www.w3.org/2000/svg"
+               >
+                 <path fill="none" d="M0 0h24v24H0z"></path>
+                 <path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"></path>
+               </svg>
+             </button>
+           </a>
+         </div>
+         <div class="w-full justify-center flex items-center gap-3 mt-6">
+           <a
+             target="_blank"
+             class="bg-gradient-to-r to-pink-500 from-violet-600 p-[1px] rounded-full transition-all duration-300 hover:from-pink-500 hover:to-violet-600"
+             href={profile.service.url}
+             rel="noopener noreferrer"
+           >
+             <button
+               class="px-3 text-lg md:px-6 py-2 md:py-2.5 bg-[#0d1224] rounded-full border-none text-center font-medium uppercase tracking-wider text-[#ffff] no-underline transition-all duration-200 ease-out md:font-semibold flex items-center gap-1 hover:gap-3"
+             >
+               <span>{profile.service.text}</span>
+   <svg width="22px" height="22px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="12" cy="10" r="7" stroke="#ffffff" stroke-width="1.5"></circle> <path d="M4 16.5623C5.88838 18.6722 8.63263 20 11.687 20C17.3827 20 22 15.3827 22 9.68699C22 6.63263 20.6722 3.88838 18.5623 2" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path> <path d="M7 4.55263C7.58518 5.10525 8.79066 6.61576 8.93111 8.2368C9.06238 9.75203 10.0268 10.9832 11.5 10.9999C12.0662 11.0063 12.6388 10.5822 12.6373 9.99503C12.6368 9.81346 12.6079 9.62782 12.5627 9.45703C12.4998 9.21948 12.4942 8.94619 12.625 8.66662C13.0824 7.68861 13.982 7.42589 14.6949 6.89475C15.0111 6.65918 15.2995 6.41067 15.4266 6.2105C15.7777 5.65788 16.1289 4.55263 15.9533 4" stroke="#ffffff" stroke-width="1.5"></path> <path d="M19 11C18.7804 11.6207 18.625 13.25 16.1455 13.2759C16.1455 13.2759 13.9497 13.2759 13.291 14.5172C12.764 15.5103 13.0714 16.5862 13.291 17" stroke="#ffffff" stroke-width="1.5"></path> <path d="M12 22V20" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path> <path d="M12 22H10" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path> <path d="M14 22H12" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>          </button>
+           </a>
+         </div>
+       </section>
     </div>
+
     <div
       class="h-full from-[#0d1224] border-[#1b2c68a0] relative rounded-lg border bg-gradient-to-r to-[#0a0d37]"
     >
@@ -110,49 +164,55 @@
         <code class="font-mono text-xs md:text-sm lg:text-base"
           ><div class="blink">
             <span class="mr-2 text-pink-400">const</span><span
-              class="mr-2 text-violet-400">desarrollador</span
-            ><span class="mr-2 text-pink-400">=</span><span
+              class="mr-2 text-violet-400">PERFIL</span
+            ><span class=" mr-2 text-pink-400">=</span><span
               class="text-gray-400">{"{"}</span
-            ><div>
-              <span class="ml-4 lg:ml-8 mr-2 text-white">Nombre:</span><span
+            ><div class="mt-6 mb-1 ">
+              <span class="mr-2 text-white">Nombre:</span><span
                 class="text-gray-400">'</span
               ><span class="text-green-400">Joshep Manuel Macha Rutti</span
               ><span class="text-gray-400">',</span>
             </div>
 
-            <div>
-              <span class="ml-4 lg:ml-8 mr-2 text-white">Ubicación:</span><span
+            <div class="mb-1">
+              <span class=" mr-2 text-white">Ubicación:</span><span
                 class="text-gray-400">'</span
-              ><span class="text-green-400">Perú</span><span
+              ><span class="text-red-400">Perú</span><span
                 class="text-gray-400">',</span
               >
             </div>
-            <div>
-              <span class="ml-4 lg:ml-8 mr-2 text-white">Título:</span><span
-                class="text-green-400">Fullstack Engineer</span
+            <div class="mb-1">
+              <span class=" mr-2 text-white">Título:</span><span
+                class="text-cyan-400">Fullstack Engineer</span
               ><span class="text-gray-400">,</span>
             </div>
-            <div class="ml-4 lg:ml-8 mr-2">
+            <div class=" mb-1 mr-2">
               <span class="text-white">Habilidades: </span><span
-                class="text-gray-400">['</span
+                class="text-indigo-400">['</span
               ><span class="text-cyan-400">Vue js</span><span
-                class="text-gray-400">', '</span
+                class="text-indigo-400">', '</span
               ><span class="text-cyan-400">React</span><span
-                class="text-gray-400">', '</span
+                class="text-indigo-400">', '</span
               ><span class="text-cyan-400">Laravel</span><span
-                class="text-gray-400">', '</span
+                class="text-indigo-400">', '</span
               ><span class="text-cyan-400">Node js</span><span
-                class="text-gray-400">', '</span
+                class="text-indigo-400">', '</span
               ><span class="text-cyan-400">Bootstrap</span><span
-                class="text-gray-400">', '</span
+                class="text-indigo-400">', '</span
               ><span class="text-cyan-400">Tailwind</span><span
-                class="text-gray-400"
+                class="text-indigo-400"
                 ><span class="text-gray-400">'],</span>
               </span>
             </div>
-            <div>
-              <span class="ml-4 lg:ml-8 mr-2 text-white">Contratable:</span
+            <div class="mb-1">
+              <span class=" mr-2 text-white">Contratable:</span
               ><span class="text-orange-400">true</span><span
+                class="text-gray-400">,</span
+              >
+            </div>
+            <div class="mb-6">
+              <span class=" mr-2 text-white">Experiencia:</span
+              ><span class="text-green-400">+3 años</span><span
                 class="text-gray-400">,</span
               >
             </div>

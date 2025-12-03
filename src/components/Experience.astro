@@ -1,47 +1,78 @@
+---
+const experiences = [
+  {
+    title: "Software Developer",
+    company: "TitanicSoft",
+    date: "Diciembre 2024 - Diciembre 2025",
+    description: "<b>Lideréde proyectos</b> de forma parcial, coordinando equipos, reuniones técnicas, despliegues y soporte post-implementación.",
+    description2: "<b>Desarrollé aplicaciones</b> con JavaScript y CodeIgniter, optimizando bases de datos y diseñando APIs seguras con autenticación y manejo de errores estandarizado.",
+    href: "https://titanicsoft.com/",
+    color: "text-yellow-500",
+  },
+  {
+    title: "Fullstack Engineer",
+    company: "SofticsLab",
+    date: "Junio 2022 - Julio 2024",
+    description: "<b>Implementé soluciones web</b> utilizando Vue.js para el frontend y Laravel para el backend, optimizando la experiencia del usuario y garantizando la eficiencia del sistema.",
+    description2: "<b>Diseñé y modelé bases de datos</b> para el desarrollo de aplicaciones empresariales, asegurando una arquitectura robusta y eficiente.",
+    href: "https://softicslab.com/",
+    color: "text-cyan-500",
+  }
+]
+
+---
 <section
   id="experiencia"
   data-section="experiencia"
   class=""
 >
   <h2
-    class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-white"
+    class="text-yellow-500 flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-white"
   >
   🛠️
     Experiencia laboral
   </h2>
   <ol class="relative mt-16">
   <li class="">
+    {experiences.map((experience) => (
       <div
-        class="relative mx-12 pb-12 grid before:absolute before:left-[-35px] before:block before:h-full before:border-l-2 before:border-black/20 dark:before:border-white/15 before:content-[''] md:grid-cols-5 md:gap-10 md:space-x-4]"
-      >
+        class="relative mx-12 pb-12 grid before:absolute before:left-[-35px] before:block before:h-full before:border-l-2 before:border-black/20 dark:before:border-white/15 before:content-[''] md:grid-cols-5 md:gap-10 md:space-x-4"
+        >
         <div class="relative pb-12 md:col-span-2">
           <div class="sticky top-0">
             <span
-              class="text-cyan-500 -left-[42px] absolute rounded-full text-5xl"
+              class={`${experience.color} -left-[42px] absolute rounded-full text-5xl`}
               >•</span
             >
-            <h3 class="text-xl font-bold text-cyan-500">
-              Fullstack Engineer
+            <h3 class={`text-xl font-bold ${experience.color}`}>
+              {experience.title}
             </h3>
             <h4 class="font-semibold text-xl text-gray-600 dark:text-white">
-              <a href="https://softicslab.com/" rel="noopener noreferrer" target="_blank">
-                SofticsLab
+              <a class=" flex gap-2 justify-between" href={experience.href} rel="noopener noreferrer" target="_blank">
+                {experience.company}
+                  <div class="text-xs flex gap-2 items-center text-black bg-gray-600/70 dark:bg-white/70 rounded-full px-2 py-1">
+                    <span class="ml-2">
+                      Visitar web  
+                    </span>
+                    <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Interface / External_Link"> <path id="Vector" d="M10.0002 5H8.2002C7.08009 5 6.51962 5 6.0918 5.21799C5.71547 5.40973 5.40973 5.71547 5.21799 6.0918C5 6.51962 5 7.08009 5 8.2002V15.8002C5 16.9203 5 17.4801 5.21799 17.9079C5.40973 18.2842 5.71547 18.5905 6.0918 18.7822C6.5192 19 7.07899 19 8.19691 19H15.8031C16.921 19 17.48 19 17.9074 18.7822C18.2837 18.5905 18.5905 18.2839 18.7822 17.9076C19 17.4802 19 16.921 19 15.8031V14M20 9V4M20 4H15M20 4L13 11" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>
+                  </div>
               </a>
             </h4>
             <time class="p-0 m-0 text-sm text-gray-600/80 dark:text-white/80"
-              >Junio 2022 - Julio 2024</time
+              >{experience.date}</time
             >
           </div>
         </div>
         <div
           class="relative flex flex-col gap-2 pb-4 text-gray-600 dark:text-gray-300 md:col-span-3"
         >
-        <ol>
-          <li>Implementé soluciones web utilizando Vue.js para el frontend y Laravel para el backend, optimizando la experiencia del usuario y garantizando la eficiencia del sistema.</li>
-          <li class="mt-2">Diseñé y modelé bases de datos para el desarrollo de aplicaciones empresariales, asegurando una arquitectura robusta y eficiente.</li>
-        </ol>
+          <ol>
+            <li set:html={experience.description}></li>
+            <li class="mt-2" set:html={experience.description2}></li>
+          </ol>
         </div>
       </div>
+    ))}
     </li>
   </ol>
 </section>
