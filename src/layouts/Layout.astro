@@ -5,17 +5,76 @@ interface Props {
 }
 
 const { title } = Astro.props;
+
+const description = 'Joselow (Joshep Manuel Macha Rutti), desarrollador Full Stack con más de 3 años de experiencia en aplicaciones web usando Vue.js, React, Laravel, Node.js, Bootstrap y Tailwind.'
+const siteUrl = 'https://portafolio.joselow.space/';
+const siteName = 'Joselow | Fullstack Engineer';
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
+		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		 <!-- SEO básico -->
+		<meta name="robots" content="index, follow" />
+		<meta
+		name="keywords"
+		content="Joselow, Joshep Manuel Macha Rutti, desarrollador full stack, fullstack engineer, desarrollador web, Vue.js, React, Laravel, Node.js, Perú, TitanicSoft, SofticsLab"
+		/>
+		<meta name="author" content="Joshep Manuel Macha Rutti" />
+
+		<!-- Open Graph (para compartir en redes) -->
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={siteUrl} />
+		<meta property="og:site_name" content={siteName} />
+		<meta property="og:image" content={`${siteUrl}/og-image.jpg`} />
+
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={`${siteUrl}/og-image.jpg`} />
+
+		<!-- Schema.org: Perfil como Desarrollador -->
+		<script type="application/ld+json">
+		{JSON.stringify({
+			'@context': 'https://schema.org',
+			'@type': 'Person',
+			name: 'Joshep Manuel Macha Rutti',
+			alternateName: 'Joselow',
+			jobTitle: 'Fullstack Engineer',
+			worksFor: {
+			'@type': 'Organization',
+			name: 'TitanicSoft',
+			},
+			address: {
+			'@type': 'PostalAddress',
+			addressCountry: 'PE',
+			addressLocality: 'Perú',
+			},
+			url: siteUrl,
+			sameAs: [
+			'https://github.com/tu-usuario', // cámbialo
+			'https://www.linkedin.com/in/tu-usuario', // cámbialo
+			],
+			knowsAbout: [
+			'Vue.js',
+			'React',
+			'Laravel',
+			'Node.js',
+			'Bootstrap',
+			'Tailwind CSS',
+			'Desarrollo de aplicaciones web',
+			],
+		})}
+		</script>
 	</head>
 	<body>
     <Nav/>
