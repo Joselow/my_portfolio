@@ -1,0 +1,115 @@
+---
+import type { Project } from '../interfaces/index';
+import { Image } from 'astro:assets';
+import ImagesCarrusel from './commons/ImagesCarrusel.astro';
+
+interface Props {
+	project: Project;
+}
+const { project } = Astro.props;
+---
+
+<article class="max-w-6xl mx-auto px-4 py-6 md:py-8">
+  <!-- Encabezado con título y botones de acción -->
+  <header class="mb-10">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+      <h1 class="flex-1 text-3xl md:text-4xl font-bold text-cyan-title dark:text-white">
+        {project.title}
+      </h1>
+      
+      <div class="flex-2 flex gap-4">
+        {project.demoLink && (
+          <a 
+            href={project.demoLink} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="px-6 py-2 bg-cyan-500 hover:bg-cyan-600 text-white rounded-lg transition-colors flex items-center gap-2"
+          >
+             <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+              <g id="SVGRepo_iconCarrier">
+                <g id="Interface / External_Link">
+                  <path id="Vector" d="M10.0002 5H8.2002C7.08009 5 6.51962 5 6.0918 5.21799C5.71547 5.40973 5.40973 5.71547 5.21799 6.0918C5 6.51962 5 7.08009 5 8.2002V15.8002C5 16.9203 5 17.4801 5.21799 17.9079C5.40973 18.2842 5.71547 18.5905 6.0918 18.7822C6.5192 19 7.07899 19 8.19691 19H15.8031C16.921 19 17.48 19 17.9074 18.7822C18.2837 18.5905 18.5905 18.2839 18.7822 17.9076C19 17.4802 19 16.921 19 15.8031V14M20 9V4M20 4H15M20 4L13 11" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+              </g>
+            </svg>
+            Ver Demo
+          </a>
+        )}
+        
+        {project.codeLink && (
+          <a 
+            href={project.codeLink} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="px-6 py-2 border border-cyan-500 text-cyan-500 hover:bg-cyan-50 dark:hover:bg-gray-800 rounded-lg transition-colors flex items-center gap-2"
+          >
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+            Ver Código
+          </a>
+        )}
+      </div>
+    </div>
+    
+    <div class="flex flex-wrap gap-2 mb-6">
+      <span class="text-lg font-semibold text-white">
+        Tecnologías usadas: 
+      </span>
+      {project.technologies.map(tech => (
+        <span 
+          class="px-3 py-1 rounded-full text-lg font-medium"
+          style={`background-color: ${tech.color}20; color: ${tech.color};`}
+        >
+          {tech.name}
+        </span>
+      ))}
+    </div>
+  </header>
+
+  <!-- Galería de imágenes con carrusel -->
+  {project.images && project.images.length > 0 && (
+    <section class="mb-12">
+      <ImagesCarrusel 
+        images={project.images} 
+        autoPlayInterval={4000} 
+      />
+    </section>
+  )}
+
+  <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
+      {project.longDescription || project.description}
+    </p>
+
+  <!-- Características principales -->
+  {project.features && project.features.length > 0 && (
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4 text-cyan-title dark:text-white">Características Principales</h2>
+      <ul class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        {project.features.map(feature => (
+          <li class="flex items-start gap-2">
+            <svg class="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-gray-700 dark:text-gray-300">{feature}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <!-- Sección de navegación -->
+  <div class="pt-8 border-t border-gray-200 dark:border-gray-700 mt-12">
+    <a 
+      href="/#proyectos" 
+      class="inline-flex items-center text-cyan-600 hover:text-cyan-800 dark:text-cyan-400 dark:hover:text-cyan-300 transition-colors"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+      </svg>
+      Volver a Proyectos
+    </a>
+  </div>
+</article>

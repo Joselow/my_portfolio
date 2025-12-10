@@ -1,0 +1,32 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProjectDetail from '../../components/ProjectDetail.astro';
+import { projects } from '../../data/projects';
+
+export async function getStaticPaths() {
+  return projects.map(project => ({
+    params: { id: project.id },
+    props: { project }
+  }));
+}
+
+// Obtener el proyecto actual
+const { project } = Astro.props;
+
+// Si no se encuentra el proyecto, redirigir a la página 404
+if (!project) {
+  return Astro.redirect('/404');
+}
+
+// Encontrar el proyecto por ID
+const projectFound = projects.find(p => p.id === project.id);
+
+// Si no se encuentra el proyecto, redirigir a la página 404
+if (!projectFound) {
+  return Astro.redirect('/404');
+}
+---
+
+<Layout title={`${projectFound.title} | Mi Portafolio`}>
+  <ProjectDetail project={projectFound} />
+</Layout>

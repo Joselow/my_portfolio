@@ -1,0 +1,255 @@
+---
+export interface ProjectImage {
+  image: string;
+  alt: string;
+  description?: string;
+}
+
+interface Props {
+  images: ProjectImage[];
+  autoPlayInterval?: number;
+}
+
+const { images = [], autoPlayInterval = 5000  } = Astro.props;
+
+// Stringify the images array for client-side use
+const imagesJson = JSON.stringify(images);
+---
+
+<div class="relative group">
+  <!-- Main Image Container -->
+  <div class="relative overflow-hidden rounded-lg">
+    <div class="flex transition-transform duration-300 ease-in-out" id="carousel-track">
+      {images.map((img, index) => (
+        <div class="w-full flex-shrink-0 relative group/image-item">
+          <img 
+            src={img.image} 
+            alt={img.alt} 
+            class="w-full h-auto object-cover cursor-pointer transition-transform duration-300 hover:scale-105"
+            loading={index === 0 ? 'eager' : 'lazy'}
+            data-index={index}
+            id={`image-${index}`}
+          />
+          {img.description && (
+            <div class="absolute bottom-0 left-0 right-0 bg-black/70 text-white p-4 opacity-0 group-hover/image-item:opacity-100 transition-opacity">
+              <p class="text-sm">{img.description}</p>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+
+    <!-- Navigation Arrows -->
+    {images.length > 1 && (
+      <>
+        <button 
+          class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+          id="prev-btn"
+          aria-label="Previous image"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button 
+          class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+          id="next-btn"
+          aria-label="Next image"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </>
+    )}
+  </div>
+
+  <!-- Dots Navigation -->
+  {images.length > 1 && (
+    <div class="flex justify-center mt-4 space-x-2" id="dots-container">
+      {images.map((_, index) => (
+        <button 
+          type="button" 
+          dots-index={index}
+          class={`h-3 w-3 rounded-full transition-colors ${index === 0 ? 'bg-cyan-500' : 'bg-gray-300'}`}
+          data-index={index}
+          aria-label={`Go to image ${index + 1}`}
+        ></button>
+      ))}
+    </div>
+  )}
+
+  <!-- Modal -->
+  <div id="image-modal" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity">
+    <button 
+      id="close-modal" 
+      class="absolute top-4 right-4 text-white text-4xl hover:text-gray-300"
+      aria-label="Close modal"
+    >
+      &times;
+    </button>
+    <div class="relative  w-full max-h-[90vh]">
+        <img
+      id="modal-image"
+      src=""             
+      alt=""
+      class="max-w-full max-h-[85vh] mx-auto object-contain"
+    />
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ autoPlayInterval, images, imagesJson  }} is:inline>
+  
+  // Initialize variables
+  const track = document.getElementById('carousel-track');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+
+  const dots = document.querySelectorAll('[dots-index]');
+  const modal = document.getElementById('image-modal');
+  const modalImage = document.getElementById('modal-image');
+  const closeModal = document.getElementById('close-modal');
+
+  let currentIndex = 0;
+  let autoPlayTimer = undefined;
+  const autoPlayIntervalValue = autoPlayInterval;
+  const totalImages = images.length;
+
+  const imagesData = JSON.parse(imagesJson)
+
+  // Update carousel position
+  function updateCarousel() {
+    track.style.transform = `translateX(-${currentIndex * 100}%)`;
+    
+    // Update active dot
+    console.log(dots);
+    
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('bg-cyan-500', index === currentIndex);
+      dot.classList.toggle('bg-gray-300', index !== currentIndex);
+    });
+  }
+
+  // Go to specific slide
+  function goToSlide(index) {
+    currentIndex = (index + totalImages) % totalImages;
+    updateCarousel();
+    resetAutoPlay();
+  }
+
+  // Next slide
+  function nextSlide() {
+    goToSlide(currentIndex + 1);
+  }
+
+  // Previous slide
+  function prevSlide() {
+    goToSlide(currentIndex - 1);
+  }
+
+  // Auto-play functionality
+  function startAutoPlay() {
+    if (totalImages <= 1) return;
+    
+    autoPlayTimer = window.setInterval(() => {
+      nextSlide();
+    }, autoPlayIntervalValue) 
+  }
+
+  function resetAutoPlay() {
+    clearInterval(autoPlayTimer);
+    startAutoPlay();
+  }
+
+  // Event Listeners
+  if (prevBtn && nextBtn) {
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      prevSlide();
+    });
+
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      nextSlide();
+    });
+  }
+
+  // Dots navigation
+  dots.forEach(dot => {
+    dot.addEventListener('click', (e) => {
+      const target = e.target
+      const index = parseInt(target.getAttribute('data-index') || '0');
+      goToSlide(index);
+    });
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (modal.style.opacity === '1') {
+      if (e.key === 'Escape') {
+        closeModal.click();
+      } else if (e.key === 'ArrowLeft') {
+        prevSlide();
+      } else if (e.key === 'ArrowRight') {
+        nextSlide();
+      }
+    }
+  });
+
+  // Image click to open modal
+  document.querySelectorAll('img[data-index]').forEach(img => {
+    img.addEventListener('click', (e) => {
+      const target = e.target
+      const index = parseInt(target.getAttribute('data-index') || '0');
+      const imageData = imagesData[index];
+      
+      if (modalImage) {
+        modalImage.src = imageData.image;
+        modalImage.alt = imageData.alt;
+      }
+      
+      
+      if (modal) {
+        modal.style.opacity = '1';
+        modal.style.pointerEvents = 'auto';
+        document.body.style.overflow = 'hidden';
+      }
+      
+      // Update current index to match the clicked image
+      currentIndex = index;
+      updateCarousel();
+    });
+  });
+
+  // Close modal
+  closeModal.addEventListener('click', () => {
+    modal.style.opacity = '0';
+    modal.style.pointerEvents = 'none';
+    document.body.style.overflow = 'auto';
+  });
+
+  // Close modal when clicking outside the image
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal?.click();
+      }
+    });
+  }
+
+  // Initialize
+  updateCarousel();
+  startAutoPlay();
+
+  // Pause auto-play when hovering over the carousel
+  if (track) {
+    track.parentElement.addEventListener('mouseenter', () => {
+      clearInterval(autoPlayTimer);
+    });
+
+    track.parentElement.addEventListener('mouseleave', () => {
+      resetAutoPlay();
+    });
+  }
+</script>
